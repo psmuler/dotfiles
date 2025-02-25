@@ -1,0 +1,66 @@
+Host *
+	ForwardAgent yes
+	IdentityFile /Users/ti/.ssh/id_rsa
+	UseKeychain yes
+	AddKeysToAgent yes
+	StrictHostKeyChecking no
+	ServerAliveInterval 60
+	TCPKeepAlive yes
+Host ti00_u
+	HostName 133.11.72.168
+	User utokyo_g0
+	IdentityFile ~/.ssh/id_rsa
+	Port 10022
+	LocalForward 29971 localhost:29971
+Host ti01
+	HostName 133.11.72.172
+	IdentityFile ~/.ssh/id_rsa
+	Port 10022
+	User c-miura
+	ProxyCommand ssh -W %h:%p ti00_u
+	LocalForward 29971 localhost:29971
+	ForwardX11 yes
+	ForwardX11Trusted yes
+	ForwardAgent yes
+Host ti02
+	HostName 133.11.72.172
+	IdentityFile ~/.ssh/id_rsa
+	Port 20022
+	User c-miura
+	ProxyCommand ssh -W %h:%p ti00_u
+	LocalForward 29972 localhost:29972
+	ForwardX11 yes
+	ForwardX11Trusted yes
+	ForwardAgent yes
+Host ti03
+	HostName 133.11.72.172
+	IdentityFile ~/.ssh/id_rsa
+	Port 30022
+	User c-miura
+	LocalForward 29973 localhost:29973
+	ForwardX11 yes
+	ForwardX11Trusted yes
+	ProxyCommand ssh -W %h:%p ti00_u
+Host ti04
+	HostName 133.11.72.172
+	IdentityFile ~/.ssh/id_rsa
+	Port 40022
+	User c-miura
+	LocalForward 29974 localhost:29974
+	ForwardX11 yes
+	ForwardX11Trusted yes
+	ProxyCommand ssh -W %h:%p ti00_u
+Host ti05
+	HostName 133.11.72.172
+	IdentityFile ~/.ssh/id_rsa
+	Port 50022
+	User c-miura
+	LocalForward 29975 localhost:29975
+	ForwardX11 yes
+	ForwardX11Trusted yes
+	ProxyCommand ssh -W %h:%p ti00_u
+Host aws01
+	HostName 44.245.104.238
+	IdentityFile ~/.ssh/aws_linux_x86.pem
+	Port 22
+	User ec2-user

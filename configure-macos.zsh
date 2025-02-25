@@ -1,4 +1,4 @@
-HOSTNAME="Kasumi"
+HOSTNAME="ti"
 sudo scutil --set HostName $HOSTNAME
 sudo scutil --set LocalHostName $HOSTNAME
 sudo scutil --set ComputerName $HOSTNAME
@@ -6,7 +6,7 @@ dscacheutil -flushcache
 
 # Create SSH key for GitHub etc.
 # https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
-ssh-keygen -t ed25519 -C "hideo54@${HOSTNAME}.local"
+ssh-keygen -t ed25519 -C "psmuler@${HOSTNAME}.local"
 cat ~/.ssh/id_ed25519.pub
 echo 'Host *
   AddKeysToAgent yes
@@ -14,32 +14,8 @@ echo 'Host *
   IdentityFile ~/.ssh/id_ed25519' >> ~/.ssh/config
 ssh-add -K ~/.ssh/id_ed25519
 
-# Deprecated because this configuration will not be reflected on System Preferences UI.
-# Set up manually on System Preferences app.
-# Replace caps lock with control
-# keyboardid="$(ioreg -c AppleEmbeddedKeyboard -r | grep -Eiw "VendorID|ProductID" | awk '{ print $4 }' | paste -s -d'-\n' -)-0"
-# defaults -currentHost write -g com.apple.keyboard.modifiermapping.${keyboardid} \
-#     -array-add \
-#     '<dict>
-#       <key>HIDKeyboardModifierMappingDst</key>
-#       <integer>2</integer>
-#       <key>HIDKeyboardModifierMappingSrc</key>
-#       <integer>0</integer>
-#     </dict>' # REBOOT REQUIRED
-# # Configure Dock
-# defaults write com.apple.dock tilesize -int 128 # set maximum icon size
-# defaults write com.apple.dock orientation -string "left"
-# killall Dock
-
-# Save screenshots to ~/Screenshots
-mkdir ~/Screenshots
-defaults write com.apple.screencapture location ~/Screenshots
-killall SystemUIServer
-
-# Create Products directory
-mkdir ~/Products
-
 # Install Homebrew
+sudo -s
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 UNAME_MACHINE="$(uname -m)"
 if [[ "$UNAME_MACHINE" == "arm64" ]]; then # なんで arm64 に限ってるのか正直わからんが、上のスクリプトに従っている
@@ -47,20 +23,20 @@ if [[ "$UNAME_MACHINE" == "arm64" ]]; then # なんで arm64 に限ってるの�
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-sudo softwareupdate --install-rosetta
-
 # Formulae
 brew install emacs
-brew install ffmpeg
-brew install go
-brew install imagemagick
-brew install jq
 brew install macos-trash
 brew install mas
 brew install n
 brew install pyenv
 brew install rbenv
-brew install yt-dlp/taps/yt-dlp
+brew install git
+brew install git-lfs
+brew install hub
+brew install icecream
+brew install tree
+brew install nmap
+brew install poppler
 
 # Install the latest Node.js
 sudo n latest
@@ -79,62 +55,64 @@ echo 'eval "$(rbenv init -)"' >> ~/.zprofile
 source ~/.zprofile
 
 # Casks
+# brew install brew-cask
 brew install 1password # because Mac App Store version does not support device license
-brew install blackhole-2ch
-brew install blackhole-16ch
-brew install blackhole-64ch
 brew install clipy
-brew install cmd-eikana
-brew install discord
-brew install firefox
+# brew install cmd-eikana
 brew install google-chrome
 brew install google-cloud-sdk
-brew install google-japanese-ime
 brew install iterm2
-brew install keepingyouawake
-brew install mactex-no-gui
-brew install mongodb-compass
+# brew install mactex-no-gui
+# brew install mongodb-compass
 brew install monitorcontrol
-brew install ngrok
+# brew install ngrok
 brew install visual-studio-code
-brew install vlc
 brew install zoom
+brew install --cask figma
+brew install --cask zotero
+brew install --cask discord
+brew install --cask dropbox
+brew install --cask fujitsu-scansnap-home
+brew install --cask beeper
 
-# Fonts
-brew tap hideo54/cask-fonts git@github.com:hideo54/homebrew-cask-fonts.git
-brew install font-firge
-brew install font-noto-sans-cjk-jp
 
 # Set up menubar applications
-open -a /Applications/⌘英かな.app
+# open -a /Applications/⌘英かな.app
 open -a /Applications/Clipy.app
-open -a /Applications/KeepingYouAwake.app
+open -a Dropbox.app
+
+# Set up screenshots location to Dropbox folder
+defaults write com.apple.screencapture location ~/Dropbox/Screenshots
+killall SystemUIServer
 
 # Open Google Chrome to urge manual sign in before auto setting
 open -a /Applications/Google\ Chrome.app
 
 # Mac App Store applications
 open -a /System/Applications/App\ Store.app # sign in manually
-mas install 411213048 # LadioCast
-mas install 417375580 # BetterSnapTool
-mas install 497799835 # Xcode
-mas install 539883307 # LINE
-
-# Install userscripts made by hideo54
-curl https://api.github.com/repos/hideo54/userscripts/contents | jq '.[] | .path | "https://raw.githubusercontent.com/hideo54/userscripts/master/" + select(.|endswith(".user.js"))' | xargs open
-curl https://api.github.com/repos/hideo54/userscripts/contents | jq '.[] | .path | "https://raw.githubusercontent.com/hideo54/userscripts/master/" + select(.|endswith(".user.css"))' | xargs open
+mas install 1258530160 # Focus To-Do: Pomodoro Timer
+mas install 937984704  # Amphetamine
 
 # Set up essential git config
-git config --global user.email "hideo54@hideo54.com"
-git config --global user.name "Hideo Yasumoto"
-git config --global pull.rebase false
+git config --global user.email "zhmuler@gmail.com"
+git config --global user.name "psmuler"
+# git config --global pull.rebase false
 curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh > ~/.git-completion.zsh
 
 # iTerm2 Shell Integration
 curl -L https://iterm2.com/shell_integration/install_shell_integration.sh | bash
+source ~/.iterm2_shell_integration.zsh
 
-# userChrome.css for Firefox
-FIREFOX_PROFILE_DIR_PATH="/Users/hideo54/Library/Application Support/Firefox/Profiles"
-FIREFOX_PROFILE_DIR_PATH="${FIREFOX_PROFILE_DIR_PATH}/`ls $FIREFOX_PROFILE_DIR_PATH | grep .default-release`"
-mv chrome/ $FIREFOX_PROFILE_DIR_PATH
-echo "Access to about:config and enable `toolkit.legacyUserProfileCustomizations.stylesheets`"
+# Set up macOS defaults
+defaults write -g AppleShowScrollBars -string "WhenScrolling"
+defaults write -g NSAutomaticSpellingCorrectionEnabled -bool false
+defaults write -g NSAutomaticCapitalizationEnabled -bool false
+defaults write -g NSAutomaticPeriodSubstitutionEnabled -bool false
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv" # List view
+defaults write com.apple.finder ShowPathbar -bool true
+killall Finder
+
+defaults import com.apple.dock /path/to/my-dock.plist
+defaults write com.apple.dock show-recents -bool false
+killall Dock

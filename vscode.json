@@ -1,46 +1,102 @@
 {
-    "files.autoSave": "onWindowChange",
-    "editor.renderWhitespace": "boundary",
-    "editor.wordWrap": "on",
-    "editor.fontFamily": "'Firge Console', 'Ricty Diminished', Menlo, Monaco, 'Courier New', monospace",
-    "editor.fontSize": 16,
-    "editor.copyWithSyntaxHighlighting": false,
-    "python.jediEnabled": false,
-    "terminal.integrated.shell.osx": "/bin/zsh",
-    "terminal.integrated.fontSize": 17,
-    "workbench.startupEditor": "newUntitledFile",
-    "C_Cpp.updateChannel": "Insiders",
-    "workbench.tree.indent": 20,
-    "workbench.commandPalette.history": 83825,
-    "workbench.colorTheme": "Visual Studio Dark",
-    "workbench.statusBar.feedback.visible": false,
-    "workbench.view.alwaysShowHeaderActions": true,
-    "typescript.updateImportsOnFileMove.enabled": "always",
-    "latex-workshop.view.pdf.viewer": "tab",
-    "editor.suggestSelection": "first",
-    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "explorer.confirmDelete": false,
+    "git.enableSmartCommit": true,
+    "npm.enableRunFromFolder": true,
+    "editor.formatOnSave": true,
+    "editor.tabCompletion": "on",
+    "jupyter.askForKernelRestart": false,
+    "security.workspace.trust.untrustedFiles": "open",
+    "python.defaultInterpreterPath": "/usr/bin/python3",
+    "explorer.confirmDragAndDrop": false,
+    "window.autoDetectColorScheme": true,
+    "workbench.preferredDarkColorTheme": "Default Dark+",
+    "workbench.preferredLightColorTheme": "Default Light Modern",
     "python.languageServer": "Pylance",
-    "diffEditor.ignoreTrimWhitespace": false,
-    "go.formatTool": "goimports",
-    "workbench.editorAssociations": {
-        "*.ipynb": "jupyter.notebook.ipynb"
+    "[tex]": {
+        "editor.suggest.snippetsPreventQuickSuggestions": false,
+        "editor.tabSize": 4
     },
-    "python.showStartPage": false,
-    "jupyter.sendSelectionToInteractiveWindow": true,
-    "python.analysis.typeCheckingMode": "basic",
-    "python.analysis.extraPaths": [
-        "/Users/hideo54/.pyenv/versions/3.8.1/lib/python3.8/site-packages"
+    "[latex]": {
+        "editor.suggest.snippetsPreventQuickSuggestions": false,
+        "editor.tabSize": 4
+    },
+    "[bibtex]": {
+        "editor.tabSize": 4
+    },
+    "latex-workshop.intellisense.package.enabled": true,
+    "latex-workshop.latex.clean.fileTypes": [
+        "*.aux",
+        "*.bbl",
+        "*.blg",
+        "*.idx",
+        "*.ind",
+        "*.lof",
+        "*.lot",
+        "*.out",
+        "*.toc",
+        "*.acn",
+        "*.acr",
+        "*.alg",
+        "*.glg",
+        "*.glo",
+        "*.gls",
+        "*.ist",
+        "*.fls",
+        "*.log",
+        "*.fdb_latexmk",
+        "*.snm",
+        "*.nav",
+        "*.dvi",
+        "*.synctex.gz"
     ],
-    "files.insertFinalNewline": true,
-    "git.autofetch": true,
-    "workbench.editor.decorations.badges": true,
-    "mssql.connections": [
+    "latex-workshop.latex.outDir": "out",
+    "latex-workshop.latex.recipes": [
         {
-            "server": "{{put-server-name-here}}",
-            "database": "{{put-database-name-here}}",
-            "user": "{{put-username-here}}",
-            "password": "{{put-password-here}}"
+            "name": "latexmk",
+            "tools": [
+                "latexmk"
+            ]
         }
     ],
-    "terminal.integrated.tabs.enabled": false
+    "latex-workshop.latex.tools": [
+        {
+            "name": "latexmk",
+            "command": "latexmk",
+            "args": [
+                "-silent",
+                "-outdir=%OUTDIR%",
+                "%DOC%"
+            ]
+        }
+    ],
+    "editor.unicodeHighlight.nonBasicASCII": false,
+    "terminal.integrated.inheritEnv": false,
+    "workbench.startupEditor": "none",
+    "python.pythonPath": ".venv/bin/python",
+    "files.autoGuessEncoding": true,
+    "[python]": {
+        "editor.formatOnType": true
+    },
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "git.confirmSync": false,
+    "gitlens.graph.layout": "panel",
+    "git.openRepositoryInParentFolders": "never",
+    "workbench.editor.empty.hint": "hidden",
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "git.autofetch": true,
+    "notebook.lineNumbers": "on",
+    "terminal.integrated.commandsToSkipShell": [
+        "language-julia.interrupt"
+    ],
+    "julia.symbolCacheDownload": true,
+    "workbench.colorTheme": "Default Light Modern",
+    "github.copilot.chat.localeOverride": "en",
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": false,
+        "markdown": true,
+        "scminput": false
+    },
+    "github.copilot.editor.enableAutoCompletions": true,
+    "prisma.showPrismaDataPlatformNotification": false
 }
