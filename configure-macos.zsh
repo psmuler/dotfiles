@@ -15,7 +15,6 @@ echo 'Host *
 ssh-add -K ~/.ssh/id_ed25519
 
 # Install Homebrew
-sudo -s
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 UNAME_MACHINE="$(uname -m)"
 if [[ "$UNAME_MACHINE" == "arm64" ]]; then # なんで arm64 に限ってるのか正直わからんが、上のスクリプトに従っている
@@ -62,7 +61,8 @@ brew install clipy
 brew install google-chrome
 brew install google-cloud-sdk
 brew install iterm2
-# brew install mactex-no-gui
+brew install mactex-no-gui
+brew install --cask mathpix-snipping-tool
 # brew install mongodb-compass
 brew install monitorcontrol
 # brew install ngrok
@@ -72,7 +72,7 @@ brew install --cask figma
 brew install --cask zotero
 brew install --cask discord
 brew install --cask dropbox
-brew install --cask fujitsu-scansnap-home
+# brew install --cask fujitsu-scansnap-home
 brew install --cask beeper
 
 
@@ -103,6 +103,22 @@ curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-com
 curl -L https://iterm2.com/shell_integration/install_shell_integration.sh | bash
 source ~/.iterm2_shell_integration.zsh
 
+# Set up tex
+touch ~/.latexmkrc
+cat <<EOF >> ~/.latexmkrc
+$max_repeat = 5;
+# DVI経由でPDFをビルドすることを明示
+$pdf_mode = 3;
+
+# pLaTeXを使う
+# -halt-on-error:初めのエラーで終わらせる
+$latex = 'platex %O %S -halt-on-error';
+$bibtex = 'pbibtex %O %S';
+
+$makeindex = 'mendex %O -o %D %S';
+$dvipdf = 'dvipdfmx %O -o %D %S';
+EOF
+
 # Set up macOS defaults
 defaults write -g AppleShowScrollBars -string "WhenScrolling"
 defaults write -g NSAutomaticSpellingCorrectionEnabled -bool false
@@ -113,6 +129,7 @@ defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv" # List view
 defaults write com.apple.finder ShowPathbar -bool true
 killall Finder
 
-defaults import com.apple.dock /path/to/my-dock.plist
+curl https://raw.githubusercontent.com/psmuler/dotfiles/main/dock-current.plist > ~/.dock-current.plist
+defaults import com.apple.dock ~/.dock-current.plist
 defaults write com.apple.dock show-recents -bool false
 killall Dock
